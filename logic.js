@@ -1,9 +1,20 @@
-let wins = 0;
-let losses = 0;
-let ties = 0;
-let games = 0;
+
 
 function game(userChoice){
+    let wins = sessionStorage.getItem("wins");
+    let losses = sessionStorage.getItem("losses");
+    let ties = sessionStorage.getItem("ties");
+
+    if (wins == null){
+        wins = 0;
+    }
+    if (losses == null){
+        losses = 0;
+    }
+    if(ties == null){
+        ties = 0;
+    }
+
     let randNum = Math.floor(Math.random() * 3);
     let aiChoice = null;
 
@@ -18,40 +29,39 @@ function game(userChoice){
         aiChoice = 'scissors';
     }
 
-    document.getElementById('userChoice').innerText = userChoice;
-    document.getElementById('aiChoice').innerText = aiChoice;
+    document.getElementById('userChoice').innerText = "You Chose: " + userChoice;
+    document.getElementById('aiChoice').innerText = "The Computer Chose: " + aiChoice;
 
     //Determine Result
     if ((userChoice == aiChoice)){
         ties++;
-        document.getElementById('result').innerText = "It's a draw!";
-        document.getElementById('ties').innerText = ties;
+        sessionStorage.setItem("ties", ties);
+        document.getElementById('result').innerText = "Result: It's a draw!";
+        document.getElementById('ties').innerText = "Ties: " + sessionStorage.getItem("ties");
     }
     else if ((userChoice == 'rock' & aiChoice == 'scissors') || (userChoice == 'paper' & aiChoice == 'rock') || (userChoice == 'scissors' & aiChoice == 'paper')){
         wins++;
-        document.getElementById('result').innerText = 'You win!';
-        document.getElementById('wins').innerText = wins;
+        sessionStorage.setItem("wins", wins);
+        document.getElementById('result').innerText = 'Result: You win!';
+        document.getElementById('wins').innerText = "Wins: " + sessionStorage.getItem("wins");
     }
     else {
         losses++;
-        document.getElementById('result').innerText = 'You lose!';
-        document.getElementById('losses').innerText = losses;
+        sessionStorage.setItem("losses", losses);
+        document.getElementById('result').innerText = 'Result: You lose!';
+        document.getElementById('losses').innerText = "Losses: " + sessionStorage.getItem("losses");
     }
-    games++;
-    document.getElementById('games').innerText = games;
 }
 
 function resetRecord(){
-    wins = 0;
-    losses = 0;
-    ties = 0;
-    games = 0;
-    document.getElementById('userChoice').innerText = null;
-    document.getElementById('aiChoice').innerText = null;
-    document.getElementById('result').innerText = null;
-    document.getElementById('ties').innerText = ties;
-    document.getElementById('wins').innerText = wins;
-    document.getElementById('losses').innerText = losses;
-    document.getElementById('games').innerText = games;
-
+    sessionStorage.setItem("wins", 0);
+    sessionStorage.setItem("losses", 0);
+    sessionStorage.setItem("ties", 0);
+    document.getElementById('userChoice').innerText = "You Chose: -";
+    document.getElementById('aiChoice').innerText = "The Computer Chose: -";
+    document.getElementById('result').innerText = "Result: -";
+    document.getElementById('ties').innerText = "Ties: " + sessionStorage.getItem("ties");
+    document.getElementById('wins').innerText = "Wins: " + sessionStorage.getItem("wins");
+    document.getElementById('losses').innerText = "Losses: " + sessionStorage.getItem("losses");
 }
+
